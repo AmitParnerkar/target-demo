@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres
+    container_name: target_postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: products_db   # Creates 'products_db' automatically
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Corrected volume mapping
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user -d products_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 2
+
+  target-service:
+    image: paam0101/target-demo
+    build:
+      context: .
+    container_name: target-demo
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/products_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=mysecretpassword
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: on-failure:2
+    networks:
+      - backend
+
+networks:
+  backend:
+    name: backend
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
