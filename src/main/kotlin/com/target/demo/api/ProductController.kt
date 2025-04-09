@@ -86,6 +86,13 @@ class ProductController(val service: ProductService) {
     fun getAllProducts(): List<Product> = service.getAllProducts()
 
     @Operation(
+        summary = "Delete Products in postgreSQL",
+        description = "all products in the database deleted"
+    )
+    @DeleteMapping
+    fun deleteAllProducts() = service.deleteAllProducts()
+
+    @Operation(
         summary = "Products spreadsheet",
         description = "sample products spreadsheet to help callers understand the format",
     )

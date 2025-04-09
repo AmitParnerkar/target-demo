@@ -36,4 +36,6 @@ class ProductService(val repository: ProductRepository) {
     }
 
     fun getAllProducts(): List<Product> = repository.findAll()
+
+    fun deleteAllProducts() = repository.deleteAll()
 }
