@@ -41,7 +41,7 @@ This is a simple Spring Boot application with Kotlin designed to handle RESTful 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-repo/target-demo.git
+git clone https://github.com/target-demo.git
 cd target-demo
 ```
 
