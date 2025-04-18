@@ -52,7 +52,7 @@ cd target-demo
   docker compose up -d
   ```
 
-### 4. Access the Service
+### 3. Access the Service
 
 - Base URL: `http://<your-machine>:8080`
 
